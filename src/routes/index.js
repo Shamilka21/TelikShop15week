@@ -1,14 +1,15 @@
-import React from "react";
-import { Route, Routes } from "react-router";
-import MainPage from "../pages/MainPage";
-import Product from "../pages/Product";
-import CartPage from "../pages/CardPage";
+import React from 'react';
+import { Route, Routes } from 'react-router';
+import MainPage from '../pages/MainPage';
+import Product from '../pages/Product';
+import CartPage from '../pages/CardPage';
 
-import Payment from "../pages/Payment";
+import Payment from '../pages/Payment';
 
-import AddNewProduct from "../pages/AddNewProduct";
-import Register from "../components/Auth/Register";
-import AuthPage from "../pages/AuthPage";
+import AddNewProduct from '../pages/AddNewProduct';
+import Register from '../components/Auth/Register';
+import AuthPage from '../pages/AuthPage';
+import EditItem from '../components/EditItem/EditItem';
 
 const AppRoutes = () => {
   return (
@@ -19,6 +20,7 @@ const AppRoutes = () => {
       <Route path="/payment" element={<Payment />} />
       <Route path="/add" element={<AddNewProduct />} />
       <Route path="/register" element={<AuthPage />} />
+      <Route path="/edit/:id" element={<EditItem />} />
     </Routes>
   );
 };

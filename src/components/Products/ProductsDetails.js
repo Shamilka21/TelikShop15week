@@ -1,8 +1,8 @@
-import { Grid, Paper, makeStyles, Button } from "@material-ui/core";
-import React, { useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
-import { useProducts } from "../../contexts/ProductsContext";
-import MySpinner from "../../shared/MySpinner";
+import { Grid, Paper, makeStyles, Button } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router';
+import { useProducts } from '../../contexts/ProductsContext';
+import MySpinner from '../../shared/MySpinner';
 import {
   ImageWithZoom,
   Slider,
@@ -10,21 +10,25 @@ import {
   Slide,
   ButtonBack,
   ButtonNext,
-} from "pure-react-carousel";
-import "pure-react-carousel/dist/react-carousel.es.css";
-import { grey, lightGreen } from "@material-ui/core/colors";
+} from 'pure-react-carousel';
+import 'pure-react-carousel/dist/react-carousel.es.css';
+import { grey, lightGreen } from '@material-ui/core/colors';
+import MyLink from '../../shared/MyLink';
 
 const useStyles = makeStyles((theme) => ({
   custom_container: {
-    marginTop: "0",
-    alignItems: "center",
+    marginTop: '0',
+    alignItems: 'center',
   },
   paper: {
     padding: theme.spacing(1),
     color: theme.palette.text.primary,
-    textAlign: "left",
-    backgroundColor: "honeydew",
-    minHeight: "400px",
+    textAlign: 'left',
+    backgroundColor: 'honeydew',
+    minHeight: '200px',
+  },
+  Edit: {
+    margin: 10,
   },
 }));
 
@@ -39,7 +43,7 @@ const ProductsDetails = () => {
 
   const handleRedirectAfterDelete = () => {
     deleteProduct(id);
-    navigate("/");
+    navigate('/');
   };
   const classes = useStyles();
   return (
@@ -87,32 +91,6 @@ const ProductsDetails = () => {
                     <td>{productDetails.description}</td>
                   </tr>
                   <br />
-                  {productDetails.salePrice ? (
-                    <tr>
-                      <th> Sale Price:</th>
-                      <td>{productDetails.salePrice}</td>
-                    </tr>
-                  ) : null}
-                  <br />
-                  <tr>
-                    <th> Author:</th>
-                    <td>{productDetails.author} </td>
-                  </tr>
-                  <br />
-                  <tr>
-                    <th> Count in Stock:</th>
-                    <td>{productDetails.countInStock}</td>
-                  </tr>
-                  <br />
-                  <tr>
-                    <th> Category:</th>
-                    <td>{productDetails.category}</td>
-                  </tr>
-                  <br />
-                  <tr>
-                    <th> Phone:</th>
-                    <td>{productDetails.phone}</td>
-                  </tr>
                 </tbody>
               </table>
             </Paper>
@@ -122,6 +100,13 @@ const ProductsDetails = () => {
               color="secondary"
             >
               Delete
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.Edit}
+            >
+              <MyLink to={`/edit/${productDetails.id}`}>Edit</MyLink>
             </Button>
           </Grid>
         </Grid>

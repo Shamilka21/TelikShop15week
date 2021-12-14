@@ -1,9 +1,9 @@
-import axios from "axios";
-import React, { createContext, useContext, useReducer } from "react";
-import { useLocation, useNavigate } from "react-router";
-import { $api, API } from "../service/axios-config";
-import { calcSubPrice, calcTotalPrice } from "../utils/calc";
-import { checkItemInCart } from "../utils/check-item-cart";
+import axios from 'axios';
+import React, { createContext, useContext, useReducer } from 'react';
+import { useLocation, useNavigate } from 'react-router';
+import { $api, API } from '../service/axios-config';
+import { calcSubPrice, calcTotalPrice } from '../utils/calc';
+import { checkItemInCart } from '../utils/check-item-cart';
 import {
   ADD_AND_DELETE_PRODUCT_IN_CART,
   GET_CART,
@@ -14,18 +14,18 @@ import {
   GET_PRODUCT_LOADING,
   GET_PRODUCT_SUCCESS,
   SET_SEARCH_RESULTS,
-} from "../utils/constants";
+} from '../utils/constants';
 import {
   productError,
   productLoading,
   productSuccess,
-} from "./actions/productDetailsActions";
+} from './actions/productDetailsActions';
 import {
   productsError,
   productsLoading,
   productsSuccess,
   setSearchResults,
-} from "./actions/productsActions";
+} from './actions/productsActions';
 
 const productsContext = createContext();
 
@@ -40,8 +40,8 @@ const initialState = {
     error: null,
     product: null,
   },
-  cartData: JSON.parse(localStorage.getItem("cart"))
-    ? JSON.parse(localStorage.getItem("cart")).products.length
+  cartData: JSON.parse(localStorage.getItem('cart'))
+    ? JSON.parse(localStorage.getItem('cart')).products.length
     : 0,
   cart: {},
   searchResults: [],
@@ -147,8 +147,16 @@ const ProductsContext = ({ children }) => {
     }
   };
 
+  const editItem = (item) => {
+    try {
+      return $api.patch(`/${item.id}`, item);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const addAndDeleteProductInCart = (product) => {
-    let cart = JSON.parse(localStorage.getItem("cart"));
+    let cart = JSON.parse(localStorage.getItem('cart'));
     if (!cart) {
       cart = {
         products: [],
@@ -177,8 +185,8 @@ const ProductsContext = ({ children }) => {
     }
     cart.totalPrice = calcTotalPrice(cart.products);
 
-    console.log(cart, "cart");
-    localStorage.setItem("cart", JSON.stringify(cart));
+    console.log(cart, 'cart');
+    localStorage.setItem('cart', JSON.stringify(cart));
     dispatch({
       type: ADD_AND_DELETE_PRODUCT_IN_CART,
       payload: cart.products.length,
@@ -186,7 +194,7 @@ const ProductsContext = ({ children }) => {
   };
 
   const getCart = () => {
-    let cartFromLS = JSON.parse(localStorage.getItem("cart"));
+    let cartFromLS = JSON.parse(localStorage.getItem('cart'));
     dispatch({
       type: GET_CART,
       payload: cartFromLS,
@@ -195,7 +203,7 @@ const ProductsContext = ({ children }) => {
   };
 
   const changeProductCount = (newCount, id) => {
-    const cart = JSON.parse(localStorage.getItem("cart"));
+    const cart = JSON.parse(localStorage.getItem('cart'));
     cart.products = cart.products.map((item) => {
       if (item.product.id === id) {
         item.count = newCount;
@@ -204,18 +212,18 @@ const ProductsContext = ({ children }) => {
       return item;
     });
     cart.totalPrice = calcTotalPrice(cart.products);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(cart));
     getCart();
   };
 
   const fetchByParams = async (query, value) => {
     const search = new URLSearchParams(location.search);
 
-    if (value === "all") {
+    if (value === 'all') {
       search.delete(query);
     } else if (Array.isArray(value)) {
-      search.set("price_gte", value[0]);
-      search.set("price_lte", value[1]);
+      search.set('price_gte', value[0]);
+      search.set('price_lte', value[1]);
     } else {
       search.set(query, value);
     }
@@ -246,7 +254,7 @@ const ProductsContext = ({ children }) => {
     console.log(newProduct);
 
     try {
-      await $api.post("/", newProduct);
+      await $api.post('/', newProduct);
     } catch (error) {
       console.log(error.message);
     }
@@ -278,6 +286,7 @@ const ProductsContext = ({ children }) => {
     fetchSearchProducts,
     addProduct,
     deleteProduct,
+    editItem,
   };
 
   return (

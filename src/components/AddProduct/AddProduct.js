@@ -1,21 +1,17 @@
-import { Button, Grid, Paper } from "@material-ui/core";
-import React, { useState } from "react";
+import { Button, Grid, Paper } from '@material-ui/core';
+import React, { useState } from 'react';
 
-import "./AddProduct.css";
-import { useNavigate } from "react-router";
-import { useProducts } from "../../contexts/ProductsContext";
+import './AddProduct.css';
+import { useNavigate } from 'react-router';
+import { useProducts } from '../../contexts/ProductsContext';
 
 const AddProduct = () => {
   const { addProduct } = useProducts();
   const [form, setForm] = useState({
-    title: "",
-    image: "",
-    price: "",
-    description: "",
-    category: "",
-    author: "",
-    phone: "",
-    countInStock: "",
+    title: '',
+    image: '',
+    price: '',
+    description: '',
   });
   const navigate = useNavigate();
 
@@ -28,17 +24,8 @@ const AddProduct = () => {
   };
 
   const addPhone = async () => {
-    if (
-      !form.title ||
-      !form.image ||
-      !form.price ||
-      !form.description ||
-      !form.category ||
-      !form.author ||
-      !form.phone ||
-      !form.countInStock
-    ) {
-      alert("fill all blanks");
+    if (!form.title || !form.image || !form.price || !form.description) {
+      alert('Fill all blanks');
       return;
     }
     await addProduct(form);
@@ -80,34 +67,6 @@ const AddProduct = () => {
                 onChange={handleChange}
                 value={form.price}
               />
-              <input
-                type="text"
-                placeholder="Category"
-                name="category"
-                onChange={handleChange}
-                value={form.category}
-              />
-              <input
-                type="text"
-                placeholder="Author"
-                name="author"
-                onChange={handleChange}
-                value={form.author}
-              />
-              <input
-                type="text"
-                placeholder="Phone"
-                name="phone"
-                onChange={handleChange}
-                value={form.phone}
-              />
-              <input
-                type="text"
-                placeholder="Count in stock"
-                name="countInStock"
-                onChange={handleChange}
-                value={form.countInStock}
-              />
             </form>
             <Button
               onClick={addPhone}
@@ -115,7 +74,7 @@ const AddProduct = () => {
               color="secondary"
               className="btn-add"
             >
-              Add a new product
+              Add new product
             </Button>
           </Paper>
         </Grid>
